@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"  
+ xmlns:context="http://www.springframework.org/schema/context"  
+ xmlns:p="http://www.springframework.org/schema/p"  
+ xmlns:mvc="http://www.springframework.org/schema/mvc"  
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns:websocket="http://www.springframework.org/schema/websocket"  
+ xsi:schemaLocation="http://www.springframework.org/schema/beans  
+      http://www.springframework.org/schema/beans/spring-beans-4.0.xsd  
+      http://www.springframework.org/schema/context  
+      http://www.springframework.org/schema/context/spring-context.xsd  
+      http://www.springframework.org/schema/mvc  
+      http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+      http://www.springframework.org/schema/websocket
+      http://www.springframework.org/schema/websocket/spring-websocket-4.0.xsd">
+     <!-- 注解扫描包 -->
+      <context:annotation-config></context:annotation-config>
+	<context:component-scan base-package="com.websocket.spring" />
+	<!-- 开启注解 -->
+	
+	<mvc:annotation-driven/>
+    <bean id="websocket" class="com.websocket.spring.WebsocketEndPoint"/>  
+  
+<websocket:handlers>  
+    <websocket:mapping path="/websocket" handler="websocket"/>  
+    <websocket:handshake-interceptors>  
+    <bean class="com.websocket.spring.HandshakeInterceptor"/>  
+    </websocket:handshake-interceptors>  
+</websocket:handlers> 
+	<!-- <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" />
+	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"></bean> -->
+	<!-- 静态资源访问 -->
+	 <mvc:resources location="/img/" mapping="/img/**"/>  
+	 <mvc:resources location="/js/" mapping="/js/**"/>   
+	 <mvc:resources location="/css/" mapping="/css/**"/> 
+	  
+     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/"></property>
+		<property name="suffix" value=".jsp"></property>
+	 </bean>
+	 
+	
+</beans>  
